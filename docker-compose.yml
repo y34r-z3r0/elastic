@@ -11,8 +11,10 @@ services:
       discovery.type: single-node
       http.port: 9200
     volumes:
-    - esdata:/usr/share/elasticsearch/data:rw
-    networks: ['elk_net']
+    - type: volume
+      source: data_elk
+      target: /usr/share/elasticsearch/data:rw
+    networks: ['elk_network']
     ports: ['9200:9200']
 
   # docs: https://www.elastic.co/guide/en/kibana/current/index.html
@@ -25,7 +27,7 @@ services:
       SERVER_PORT: 5601
       ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
       XPACK_SECURITY_ENABLED: 'true'
-    networks: ['elk_net']
+    networks: ['elk_network']
     ports: ['5601:5601']
 
   # docs: https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-overview.html
@@ -42,13 +44,14 @@ services:
       source: ./data/data.log
       target: /mnt/data/data.log
       read_only: true
-    networks: ["elk_net"]
+    networks: ['elk_network']
 
 volumes:
-  esdata:
+  data_elk:
+    name: data_elk
     driver: local
 
 networks:
-  elk_net:
-    name: elk_net
+  elk_network:
+    name: elk_network
     driver: bridge
