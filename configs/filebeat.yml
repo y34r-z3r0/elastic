@@ -1,11 +1,11 @@
-filebeat.inputs:
-  - type: log
-    paths:
-      - /mnt/data/data.log
-    fields:
-      device_name: macbook
-    fields_under_root: true
-    enabled: true
+# filebeat.inputs:
+#   - type: log
+#     paths:
+#       - /mnt/data/data.log
+#     fields:
+#       device_name: macbook
+#     fields_under_root: true
+#     enabled: true
 
 # filebeat.inputs:
 #   - type: log
@@ -20,9 +20,9 @@ filebeat.inputs:
 #          fields: ["log.offset"]
 #     enabled: true
 
-output.elasticsearch:
-  hosts: ["http://elasticsearch:9200"]
+# output.elasticsearch:
+#   hosts: ["http://elasticsearch:9200"]
 
-output.console:
-  pretty: true
-  enabled: false
+# output.console:
+#   pretty: true
+#   enabled: false
