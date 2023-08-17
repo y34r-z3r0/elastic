@@ -3,7 +3,7 @@ version: '2.4'
 services:
   # docs: https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.7.0
+    image: elasticsearch:8.8.1
     container_name: elasticsearch
     hostname: elasticsearch
     environment:
@@ -19,7 +19,7 @@ services:
 
   # docs: https://www.elastic.co/guide/en/kibana/current/index.html
   kibana:
-    image: docker.elastic.co/kibana/kibana:8.7.0
+    image: kibana:8.8.1
     container_name: kibana
     hostname: kibana
     environment:
