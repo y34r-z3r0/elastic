@@ -1,12 +1,12 @@
 Vagrant.configure(2) do |config| 
     config.vm.box = "bento/ubuntu-22.04"
-    config.vm.synced_folder ".", "/vagrant", disabled: true
+    config.vm.synced_folder "../shared", "/shared", disabled: false
     config.vm.provider "virtualbox" do |vms|
         vms.gui = false
         vms.check_guest_additions = false
         vms.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
     end
-  
+
     config.vm.define "elk" do |elk|
         elk.vm.network "public_network", ip: "192.168.1.50", bridge: "enp1s0f1"
         elk.vm.hostname = "elk"
@@ -19,8 +19,19 @@ Vagrant.configure(2) do |config|
         # elk.vm.provision "shell", path: "script.sh"
         
         # shell
-        # elk.vm.provision "shell", inline: <<-SHELL
-        # SHELL
+        elk.vm.provision "shell", inline: <<-SHELL
+            # https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html#install-deb
+            sudo dpkg -i /shared/packages/elasticsearch-8.12.0-amd64.deb
+            sudo /bin/systemctl daemon-reload
+            sudo /bin/systemctl enable elasticsearch.service
+            # sudo systemctl start elasticsearch.service
+            # https://www.elastic.co/guide/en/kibana/current/deb.html#install-deb
+            sudo dpkg -i /shared/packages/kibana-8.12.0-amd64.deb
+            # sudo /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s kibana
+            sudo /bin/systemctl daemon-reload
+            sudo /bin/systemctl enable kibana.service
+            # sudo systemctl start kibana.service
+        SHELL
         
         # ansible 
         # elk.vm.provision "ansible" do |ansible|
@@ -30,13 +41,13 @@ Vagrant.configure(2) do |config|
         # end
     end
   
-    config.vm.define "victim" do |victim| 
-        victim.vm.network "public_network", ip: "192.168.1.51", bridge: "enp1s0f1"
-        victim.vm.hostname = "victim"
-        victim.vm.provider "virtualbox" do |vm2|
-            vm2.memory = "1024"
-            vm2.cpus = "1"
-        end
+    # config.vm.define "victim" do |victim| 
+    #     victim.vm.network "public_network", ip: "192.168.1.51", bridge: "enp1s0f1"
+    #     victim.vm.hostname = "victim"
+    #     victim.vm.provider "virtualbox" do |vm2|
+    #         vm2.memory = "1024"
+    #         vm2.cpus = "1"
+    #     end
 
         # script
         # victim.vm.provision "shell", path: "script.sh"
@@ -51,5 +62,5 @@ Vagrant.configure(2) do |config|
         #     ansible.playbook = "provision/playbook.yml"
         #     ansible.become = "true"
         # end
-    end
+    # end
 end 
