@@ -1,1 +1,2 @@
-vm/.vagrant/
+vms/.vagrant/
+vms/shared/packages/*
