@@ -1,0 +1,68 @@
+#server.port: 5601
+server.host: "0.0.0.0"
+#server.basePath: ""
+#server.rewriteBasePath: false
+#server.publicBaseUrl: ""
+#server.maxPayload: 1048576
+#server.name: "your-hostname"
+#server.ssl.enabled: false
+#server.ssl.certificate: /path/to/your/server.crt
+#server.ssl.key: /path/to/your/server.key
+
+#elasticsearch.hosts: ["http://localhost:9200"]
+#elasticsearch.username: "kibana_system"
+#elasticsearch.password: "pass"
+#elasticsearch.serviceAccountToken: "my_token"
+#elasticsearch.pingTimeout: 1500
+#elasticsearch.requestTimeout: 30000
+#elasticsearch.maxSockets: 1024
+#elasticsearch.compression: false
+#elasticsearch.requestHeadersWhitelist: [ authorization ]
+#elasticsearch.customHeaders: {}
+#elasticsearch.shardTimeout: 30000
+
+xpack.encryptedSavedObjects.encryptionKey: "Yt&4yG+*4zEELWGbJX8Jc$RwHDvf-U7%"
+xpack.fleet.agents.tlsCheckDisabled: true
+
+#xpack.security.http.ssl.client_authentication in Elasticsearch is set to required.
+#elasticsearch.ssl.certificate: /path/to/your/client.crt
+#elasticsearch.ssl.key: /path/to/your/client.key
+#elasticsearch.ssl.certificateAuthorities: [ "/path/to/your/CA.pem" ]
+#elasticsearch.ssl.verificationMode: full
+#logging.root.level: debug
+
+logging:
+  appenders:
+    file:
+      type: file
+      fileName: /var/log/kibana/kibana.log
+      layout:
+        type: json
+  root:
+    appenders:
+      - default
+      - file
+#  layout:
+#    type: json
+
+#logging.loggers:
+#  - name: elasticsearch.query
+#    level: debug
+
+#logging.loggers:
+#  - name: http.server.response
+#    level: debug
+
+#logging.loggers:
+#  - name: metrics.ops
+#    level: debug
+
+#path.data: data
+pid.file: /run/kibana/kibana.pid
+#ops.interval: 5000
+#i18n.locale: "en"
+#migrations.batchSize: 1000
+#migrations.maxBatchSizeBytes: 100mb
+#migrations.retryAttempts: 15
+#unifiedSearch.autocomplete.valueSuggestions.timeout: 1000
+#unifiedSearch.autocomplete.valueSuggestions.terminateAfter: 100000
