@@ -1,5 +1,6 @@
 Vagrant.configure(2) do |config| 
     config.vm.box = "bento/ubuntu-22.04"
+    config.vm.synced_folder ".", "/vagrant", disabled: true
     config.vm.synced_folder "../shared", "/shared", disabled: false
     config.vm.provider "virtualbox" do |vms|
         vms.gui = false
@@ -24,13 +25,24 @@ Vagrant.configure(2) do |config|
             sudo dpkg -i /shared/packages/elasticsearch-8.12.0-amd64.deb
             sudo /bin/systemctl daemon-reload
             sudo /bin/systemctl enable elasticsearch.service
-            # sudo systemctl start elasticsearch.service
+            sudo systemctl start elasticsearch.service
+            # --- manual {
+            # sudo /usr/share/elasticsearch/bin/elasticsearch-keystore list
+            # sudo /usr/share/elasticsearch/bin/elasticsearch-keystore create 
+            # sudo systemctl restart elasticsearch.service
+            # sudo /usr/share/elasticsearch/bin/elasticsearch-setup-passwords interactive
+            # export ELASTIC_PASSWORD=
+            # curl -u elastic:$ELASTIC_PASSWORD localhost:9200?pretty
+            # --- } manual 
             # https://www.elastic.co/guide/en/kibana/current/deb.html#install-deb
             sudo dpkg -i /shared/packages/kibana-8.12.0-amd64.deb
-            # sudo /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s kibana
-            sudo /bin/systemctl daemon-reload
             sudo /bin/systemctl enable kibana.service
-            # sudo systemctl start kibana.service
+            sudo systemctl start kibana.service
+            # --- manual {
+            # sudo /usr/share/kibana/bin/kibana-keystore add elasticsearch.username {kibana_system}
+            # sudo /usr/share/kibana/bin/kibana-keystore add elasticsearch.password
+            # sudo systemctl restart kibana.service
+            # --- } manual 
         SHELL
         
         # ansible 
