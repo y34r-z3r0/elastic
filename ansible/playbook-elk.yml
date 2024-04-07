@@ -1,0 +1,11 @@
+---
+- hosts: ["elk"]
+  roles:
+  - role: upgrade
+    tags: ["upgrade"]
+
+  - role: elasticsearch
+    tags: ["elasticsearch"]
+
+  - role: kibana
+    tags: ["kibana"]

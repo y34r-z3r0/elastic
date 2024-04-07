@@ -1,0 +1,8 @@
+all:
+  children:
+    elk:
+      hosts:
+        192.168.1.50:
+    victim:
+      hosts:
+        192.168.1.51:
